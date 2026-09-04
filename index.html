@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0b0b">
   <meta name="description" content="BULT Presents: The Work. The Life. A $60,000 founding media partnership with Harris Rudman.">
-  <title>BULT × Harris Rudman — The Work. The Life.</title>
+  <title>BULT × Harris Rudman | The Work. The Life.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,100..900&family=Instrument+Serif:ital@0;1&family=Martian+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -826,15 +826,15 @@
     .team-list { margin-top: 55px; border-top: 3px solid var(--ink); }
     .team-row {
       display: grid;
-      grid-template-columns: 70px 1fr 1fr;
+      grid-template-columns: 70px minmax(280px, .9fr) minmax(0, 1.1fr);
       gap: 20px;
       align-items: center;
       padding: 24px 0;
       border-bottom: var(--line);
     }
     .team-row .code { font: 600 11px/1 "Martian Mono", monospace; color: var(--blue); }
-    .team-row strong { font-size: clamp(28px, 4vw, 56px); line-height: .85; letter-spacing: -.05em; text-transform: uppercase; }
-    .team-row span { font: 500 12px/1.35 "Martian Mono", monospace; text-transform: uppercase; }
+    .team-row strong { min-width: 0; font-size: clamp(28px, 3.5vw, 52px); line-height: .88; letter-spacing: -.05em; text-transform: uppercase; }
+    .team-row span { min-width: 0; font: 500 12px/1.5 "Martian Mono", monospace; text-transform: uppercase; }
 
     .ask {
       min-height: 100svh;
@@ -989,6 +989,10 @@
       .package-stat:nth-child(2) { border-right: 0; }
       .package-stat:nth-child(-n+2) { border-bottom: 2px solid white; }
       .value-grid { grid-template-columns: 1fr; }
+      .team-row { grid-template-columns: 56px 1fr; gap: 8px 18px; align-items: start; }
+      .team-row .code { grid-column: 1; grid-row: 1 / span 2; padding-top: 4px; }
+      .team-row strong { grid-column: 2; }
+      .team-row > span:last-child { grid-column: 2; }
     }
 
     @media (max-width: 590px) {
@@ -1021,7 +1025,6 @@
       .package-stat:last-child { border-bottom: 0; }
       .cost-line { grid-template-columns: 1fr; }
       .team-row { grid-template-columns: 42px 1fr; }
-      .team-row span { grid-column: 2; }
       .ask h2 { font-size: 58px; line-height: .82; letter-spacing: -.07em; }
       .ask h2 em { margin-top: 12px; font-size: 64px; line-height: .76; }
       .footer-grid { grid-template-columns: 1fr; }
@@ -1080,10 +1083,10 @@
           <h2 class="display">BULT does not need a rented ad. It needs an <em>owned story.</em></h2>
         </div>
         <div class="thesis-copy reveal">
-          <p>BULT is built for men carrying real responsibility—men trying to stay consistent through pressure, ambition and long days. So we show that life honestly.</p>
+          <p>BULT is built for men carrying real responsibility. Men trying to stay consistent through pressure, ambition and long days. So we show that life honestly.</p>
           <p><strong>Paris is the work required to build something. Perfect Day is the life you are building it for.</strong> Together, they give BULT a world, not a product placement.</p>
-          <p>Alex has already built cultural platforms—from Alex Bult Gallery to his role as president of the Wayne Thiebaud Foundation. This brings that same patron instinct into modern media: back the work, own the association, let the story compound.</p>
-          <a class="bult-quote" href="https://bult.com/" target="_blank" rel="noreferrer">“Modern life is breaking men.” — BULT</a>
+          <p>Alex has already built cultural platforms, from Alex Bult Gallery to his role as president of the Wayne Thiebaud Foundation. This brings that same patron instinct into modern media: back the work, own the association, let the story compound.</p>
+          <a class="bult-quote" href="https://bult.com/" target="_blank" rel="noreferrer">BULT: “Modern life is breaking men.”</a>
         </div>
       </div>
     </section>
@@ -1164,7 +1167,7 @@
       </div>
 
       <div class="filmstrip-wrap reveal">
-        <div class="filmstrip-label mono">Original Paris archive — drag to explore</div>
+        <div class="filmstrip-label mono">Original Paris archive / drag to explore</div>
         <div class="filmstrip" aria-label="Paris photo archive">
           <figure class="frame" tabindex="0" data-lightbox="assets/paris-graffiti.webp" data-caption="Paris streets / Harris Rudman + Brian Lentz">
             <img src="assets/paris-graffiti.webp" alt="Harris Rudman and Brian Lentz beside street art in Paris">
@@ -1205,7 +1208,7 @@
     <section class="life-intro section-pad" id="perfect-day">
       <div class="section-kicker reveal"><span class="num">05</span> Series two / The life</div>
       <h2 class="display reveal">Harris Bueller’s <em>Perfect Day Off.</em></h2>
-      <p class="body-large reveal" style="margin-top:42px">One notable guest designs their ideal day. Harris has to do every single thing—good, bad, moving or ridiculous—and BULT makes the day possible.</p>
+      <p class="body-large reveal" style="margin-top:42px">One notable guest designs their ideal day. Harris has to do every single thing, good, bad, moving or ridiculous. BULT makes the day possible.</p>
     </section>
 
     <section class="section-pad grid-bg">
@@ -1219,7 +1222,7 @@
           <div class="format-steps">
             <article class="format-step"><div><h3>Cold open</h3><p>The funniest or most emotional moment first. Give the audience a reason to stay.</p></div></article>
             <article class="format-step"><div><h3>Meet the guest</h3><p>Who they are, what they carry and why this is their version of a perfect day.</p></div></article>
-            <article class="format-step"><div><h3>Do everything</h3><p>Three or four meaningful activities. Harris participates in all of it—no matter what.</p></div></article>
+            <article class="format-step"><div><h3>Do everything</h3><p>Three or four meaningful activities. Harris participates in all of it, no matter what.</p></div></article>
             <article class="format-step"><div><h3>Favorite meal</h3><p>The conversation loosens. We get the story behind the person, not the public bio.</p></div></article>
             <article class="format-step"><div><h3>The reflection</h3><p>What makes a life feel full? End with one honest answer and two high-impact short cutdowns.</p></div></article>
           </div>
@@ -1259,7 +1262,7 @@
       <h2 class="display reveal">The brand is not beside the story. <em>It makes the story possible.</em></h2>
       <div class="value-grid">
         <article class="value-card reveal"><span class="icon">B</span><h3>BULT Presents</h3><p>Presenting-partner credit across all sixty videos, the Paris story and both series title systems.</p></article>
-        <article class="value-card reveal"><span class="icon">↗</span><h3>Natural integration</h3><p>BULT appears as a daily ritual inside work, travel, recovery and honest conversations—not as a forced commercial break.</p></article>
+        <article class="value-card reveal"><span class="icon">↗</span><h3>Natural integration</h3><p>BULT appears as a daily ritual inside work, travel, recovery and honest conversations, not as a forced commercial break.</p></article>
         <article class="value-card reveal"><span class="icon">∞</span><h3>Reusable media</h3><p>Organic reposting and campaign usage rights for agreed edits, plus category exclusivity across the partnership window.</p></article>
         <article class="value-card reveal"><span class="icon">#</span><h3>Measurable action</h3><p>Trackable links and codes, monthly reporting, watch-time and retention, traffic, attributed subscriptions, album streams and merch performance.</p></article>
       </div>
@@ -1319,7 +1322,7 @@
   </footer>
 
   <dialog id="videoDialog" aria-labelledby="videoTitle">
-    <div class="dialog-head"><span id="videoTitle">Harris Rudman live in Paris — “Immunity”</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close video">×</button></div>
+    <div class="dialog-head"><span id="videoTitle">Harris Rudman live in Paris: “Immunity”</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close video">×</button></div>
     <div class="video-wrap" id="videoWrap"></div>
   </dialog>
 
@@ -1473,7 +1476,7 @@
     const videoDialog = document.getElementById('videoDialog');
     const videoWrap = document.getElementById('videoWrap');
     document.querySelectorAll('[data-open-video]').forEach(button => button.addEventListener('click', () => {
-      videoWrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/n7AxJwXL1XM?autoplay=1&rel=0" title="Harris Rudman live in Paris — Immunity" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      videoWrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/n7AxJwXL1XM?autoplay=1&rel=0" title="Harris Rudman live in Paris: Immunity" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
       openDialog(videoDialog);
     }));
     videoDialog.addEventListener('close', () => { videoWrap.innerHTML = ''; });
