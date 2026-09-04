@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="BULT Presents: The Work. The Life. A $60,000 founding media partnership with Harris Rudman.">
+  <title>BULT × Harris Rudman — The Work. The Life.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,100..900&family=Instrument+Serif:ital@0;1&family=Martian+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b0b0b;
+      --paper: #f2eee5;
+      --lime: #dfff00;
+      --orange: #ff5a2f;
+      --blue: #3055ff;
+      --purple: #5b4dff;
+      --violet: #b996ff;
+      --gold: #d8ac63;
+      --line: 2px solid var(--ink);
+      --pad: clamp(20px, 4vw, 68px);
+      --shadow: 10px 10px 0 var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--ink); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Archivo", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    body.modal-open { overflow: hidden; }
+    ::selection { background: var(--lime); color: var(--ink); }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    img { display: block; width: 100%; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 999;
+      top: 12px;
+      left: 12px;
+      transform: translateY(-160%);
+      background: var(--lime);
+      border: var(--line);
+      padding: 12px 16px;
+      font: 700 13px/1 "Martian Mono", monospace;
+    }
+    .skip-link:focus { transform: none; }
+
+    .progress {
+      position: fixed;
+      z-index: 120;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: rgba(11,11,11,.25);
+    }
+    .progress > span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--lime);
+      transform-origin: left;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 100;
+      top: 20px;
+      left: 50%;
+      width: min(94vw, 1120px);
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      color: white;
+      background: rgba(11,11,11,.9);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 10px 12px 10px 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    .wordmark {
+      font-size: 19px;
+      font-weight: 900;
+      font-stretch: expanded;
+      letter-spacing: -.05em;
+      text-decoration: none;
+    }
+    .topbar nav { display: flex; gap: 20px; }
+    .topbar nav a {
+      color: rgba(255,255,255,.72);
+      font: 500 11px/1 "Martian Mono", monospace;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 160ms ease;
+    }
+    .topbar nav a:hover, .topbar nav a:focus-visible { color: var(--lime); }
+    .nav-ask {
+      justify-self: end;
+      border: 0;
+      border-radius: 999px;
+      background: var(--lime);
+      color: var(--ink);
+      padding: 11px 16px;
+      font: 700 11px/1 "Martian Mono", monospace;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      color: white;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      opacity: .77;
+    }
+    .hero-media img {
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 48%;
+      filter: saturate(.85) contrast(1.1);
+      scale: 1.03;
+      animation: heroIn 1.3s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(11,11,11,.32), rgba(11,11,11,.08) 35%, rgba(11,11,11,.88)),
+        linear-gradient(90deg, rgba(11,11,11,.42), transparent 55%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 8.333vw 8.333vw;
+      pointer-events: none;
+    }
+    @keyframes heroIn { from { scale: 1.12; filter: saturate(0) contrast(1.2); } }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 130px var(--pad) 36px;
+    }
+    .eyebrow, .label, .source, .mono {
+      font-family: "Martian Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: clamp(11px, 1.1vw, 14px);
+      margin: 0 0 24px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 0 5px rgba(223,255,0,.18);
+    }
+    .hero h1 {
+      max-width: 1240px;
+      margin: 0;
+      font-size: clamp(78px, 13.7vw, 220px);
+      line-height: .69;
+      letter-spacing: -.085em;
+      font-weight: 900;
+      font-stretch: 120%;
+      text-transform: uppercase;
+    }
+    .hero h1 .life {
+      display: block;
+      color: var(--lime);
+      font-family: "Instrument Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -.055em;
+      transform: translateX(clamp(0px, 12vw, 150px));
+    }
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: minmax(250px, 1.6fr) repeat(4, minmax(90px, .55fr));
+      gap: 20px;
+      align-items: end;
+      margin-top: clamp(44px, 8vh, 90px);
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.45);
+    }
+    .hero-pitch {
+      max-width: 580px;
+      font-size: clamp(18px, 1.8vw, 27px);
+      line-height: 1.13;
+      letter-spacing: -.02em;
+      margin: 0;
+    }
+    .hero-stat {
+      border-left: 1px solid rgba(255,255,255,.35);
+      padding-left: 14px;
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: clamp(25px, 3.1vw, 46px);
+      line-height: .9;
+      letter-spacing: -.06em;
+    }
+    .hero-stat span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255,255,255,.68);
+      font: 500 10px/1.25 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .ticker {
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--lime);
+      border-top: var(--line);
+      border-bottom: var(--line);
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-flex;
+      gap: 28px;
+      min-width: max-content;
+      padding: 12px 0;
+      animation: ticker 26s linear infinite;
+      font: 700 13px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+    .ticker-track span::after { content: " ✦"; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    section { position: relative; }
+    .section-pad { padding: clamp(80px, 11vw, 170px) var(--pad); }
+    .grid-bg {
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(rgba(11,11,11,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11,11,11,.07) 1px, transparent 1px);
+      background-size: 8.333vw 8.333vw;
+    }
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 35px;
+      font: 600 12px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+    .section-kicker .num {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: var(--line);
+      border-radius: 50%;
+      background: var(--lime);
+    }
+    .display {
+      margin: 0;
+      font-size: clamp(58px, 9vw, 146px);
+      line-height: .76;
+      letter-spacing: -.075em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .display em {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      text-transform: none;
+    }
+    .body-large {
+      font-size: clamp(22px, 3vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+      max-width: 920px;
+      margin: 0;
+    }
+    .rule { border: 0; border-top: var(--line); margin: 50px 0; }
+
+    .thesis {
+      color: white;
+      background: var(--ink);
+      padding: clamp(90px, 12vw, 180px) var(--pad);
+    }
+    .thesis-grid {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr;
+      gap: clamp(40px, 8vw, 130px);
+      align-items: end;
+    }
+    .thesis .display { color: white; }
+    .thesis .display em { color: var(--lime); }
+    .thesis-copy {
+      border-top: 2px solid var(--lime);
+      padding-top: 20px;
+    }
+    .thesis-copy p {
+      color: rgba(255,255,255,.76);
+      font-size: clamp(17px, 1.6vw, 23px);
+      line-height: 1.25;
+      margin: 0 0 28px;
+    }
+    .bult-quote {
+      display: inline-block;
+      color: var(--ink);
+      background: var(--lime);
+      border: 2px solid white;
+      box-shadow: 8px 8px 0 var(--purple);
+      padding: 14px 18px;
+      transform: rotate(-2deg);
+      font: 700 13px/1.2 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .proof { overflow: hidden; }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(40px, 8vw, 110px);
+      align-items: start;
+      margin-top: clamp(50px, 8vw, 100px);
+    }
+    .stat-stack { border-top: 3px solid var(--ink); }
+    .proof-stat {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      padding: 24px 0 20px;
+      border-bottom: var(--line);
+    }
+    .proof-stat .big {
+      font-size: clamp(50px, 8vw, 116px);
+      font-weight: 900;
+      line-height: .76;
+      letter-spacing: -.07em;
+    }
+    .proof-stat .what {
+      max-width: 185px;
+      text-align: right;
+      font: 500 12px/1.35 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+    .proof-note {
+      margin-top: 22px;
+      max-width: 650px;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+    .proof-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      color: white;
+      background: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 0 20px;
+      font: 700 12px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+    .btn:hover, .btn:focus-visible {
+      transform: translate(-3px,-3px);
+      box-shadow: 6px 6px 0 var(--blue);
+    }
+    .btn.alt { color: var(--ink); background: transparent; }
+    .btn.alt:hover { background: var(--lime); }
+    .arrow { font-size: 19px; }
+
+    .video-card {
+      position: sticky;
+      top: 120px;
+      border: 3px solid var(--ink);
+      background: var(--orange);
+      box-shadow: var(--shadow);
+      transform: rotate(1.4deg);
+    }
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 35px;
+      color: white;
+      background: var(--ink);
+      padding: 0 12px;
+      font: 500 10px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+    .window-bar i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+    .window-bar i:nth-child(2) { background: var(--orange); }
+    .window-bar i:nth-child(3) { background: var(--blue); }
+    .window-title { margin-left: auto; color: rgba(255,255,255,.6); }
+    .video-button {
+      position: relative;
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .video-button img {
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      filter: contrast(1.08) saturate(.85);
+      transition: scale 300ms ease;
+    }
+    .video-button:hover img { scale: 1.04; }
+    .play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%,-50%);
+      display: grid;
+      place-items: center;
+      width: 82px;
+      height: 82px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--lime);
+      box-shadow: 7px 7px 0 var(--ink);
+      font-size: 30px;
+    }
+    .video-caption { padding: 20px; border-top: var(--line); }
+    .video-caption strong {
+      display: block;
+      font-size: clamp(24px, 3vw, 40px);
+      line-height: .9;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+    .video-caption span {
+      display: block;
+      margin-top: 10px;
+      font: 600 11px/1.4 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .photo-break {
+      min-height: 88svh;
+      display: grid;
+      align-items: center;
+      color: white;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .photo-break img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      object-fit: cover;
+      opacity: .62;
+      filter: saturate(.75) contrast(1.15);
+    }
+    .photo-break::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(11,11,11,.82), rgba(11,11,11,.08) 70%);
+    }
+    .photo-break-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      padding: 100px var(--pad);
+    }
+    .photo-break .display { color: white; }
+    .photo-break .display em { color: var(--lime); }
+
+    .project-head {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 50px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+    .project-number {
+      justify-self: end;
+      display: grid;
+      place-items: center;
+      width: clamp(120px, 15vw, 220px);
+      aspect-ratio: 1;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      color: white;
+      background: var(--blue);
+      box-shadow: 12px 12px 0 var(--ink);
+      font-size: clamp(50px, 8vw, 100px);
+      font-weight: 900;
+      transform: rotate(5deg);
+    }
+    .subhed {
+      max-width: 740px;
+      margin: 30px 0 0;
+      font-size: clamp(19px, 2vw, 30px);
+      line-height: 1.12;
+      letter-spacing: -.025em;
+    }
+
+    .day-map {
+      border: 3px solid var(--ink);
+      box-shadow: var(--shadow);
+      background: white;
+      overflow: hidden;
+    }
+    .day-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-bottom: var(--line);
+    }
+    .day-tab {
+      border: 0;
+      border-right: var(--line);
+      background: var(--paper);
+      padding: 16px 8px;
+      font: 700 12px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .day-tab:last-child { border-right: 0; }
+    .day-tab[aria-selected="true"] { background: var(--lime); }
+    .day-tab:focus-visible { outline: 4px solid var(--blue); outline-offset: -4px; }
+    .day-content {
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      min-height: 390px;
+    }
+    .day-copy { padding: clamp(28px, 5vw, 70px); align-self: center; }
+    .day-copy .mono { font-size: 11px; color: var(--blue); }
+    .day-copy h3 {
+      max-width: 620px;
+      margin: 14px 0;
+      font-size: clamp(38px, 5vw, 74px);
+      line-height: .86;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+    .day-copy p { max-width: 550px; margin: 0; font-size: 18px; line-height: 1.35; }
+    .day-image { position: relative; overflow: hidden; background: var(--ink); }
+    .day-image img { position: absolute; inset: 0; height: 100%; object-fit: cover; }
+
+    .filmstrip-wrap { margin: 80px calc(var(--pad) * -1) 0; overflow: hidden; }
+    .filmstrip-label { margin: 0 var(--pad) 20px; }
+    .filmstrip {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 0 var(--pad) 30px;
+      scroll-snap-type: x mandatory;
+      scrollbar-color: var(--ink) transparent;
+    }
+    .frame {
+      flex: 0 0 min(72vw, 520px);
+      border: 3px solid var(--ink);
+      background: var(--ink);
+      box-shadow: 8px 8px 0 var(--blue);
+      scroll-snap-align: start;
+      cursor: zoom-in;
+    }
+    .frame:nth-child(even) { transform: rotate(-1.3deg); box-shadow: 8px 8px 0 var(--orange); }
+    .frame img { aspect-ratio: 16/10; object-fit: cover; }
+    .frame figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: white;
+      padding: 11px 13px;
+      font: 500 10px/1.2 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .budget-section { color: white; background: var(--ink); }
+    .budget-shell {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: clamp(40px, 8vw, 120px);
+      align-items: start;
+    }
+    .budget-sticky { position: sticky; top: 130px; }
+    .budget-total {
+      color: var(--lime);
+      font-size: clamp(82px, 12vw, 176px);
+      font-weight: 900;
+      line-height: .72;
+      letter-spacing: -.08em;
+      margin: 18px 0 25px;
+    }
+    .budget-desc { max-width: 450px; color: rgba(255,255,255,.72); font-size: 18px; line-height: 1.35; }
+    .budget-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 30px;
+    }
+    .budget-tab {
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 999px;
+      color: white;
+      background: transparent;
+      padding: 12px 15px;
+      font: 600 10px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .budget-tab[aria-selected="true"] { color: var(--ink); background: var(--lime); border-color: var(--lime); }
+    .budget-list { border-top: 2px solid white; }
+    .budget-row {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255,255,255,.28);
+      align-items: start;
+    }
+    .budget-row .code { color: var(--lime); font: 500 11px/1.3 "Martian Mono", monospace; }
+    .budget-row strong { font-size: clamp(20px, 2.2vw, 30px); line-height: 1; letter-spacing: -.025em; }
+    .budget-row p { color: rgba(255,255,255,.58); margin: 8px 0 0; font-size: 15px; }
+    .budget-row .amount { font-size: clamp(22px, 2.5vw, 34px); font-weight: 800; letter-spacing: -.04em; white-space: nowrap; }
+
+    .life-intro { color: var(--ink); background: var(--orange); overflow: hidden; }
+    .life-intro::after {
+      content: "PERFECT DAY • PERFECT DAY • PERFECT DAY •";
+      position: absolute;
+      right: -110px;
+      bottom: -45px;
+      color: rgba(11,11,11,.1);
+      font-size: clamp(70px, 12vw, 190px);
+      font-weight: 900;
+      line-height: .7;
+      letter-spacing: -.07em;
+      white-space: nowrap;
+      transform: rotate(-5deg);
+    }
+    .life-intro .display em { color: white; }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: clamp(40px, 8vw, 120px);
+      align-items: start;
+      margin-top: 70px;
+    }
+    .question-card {
+      position: sticky;
+      top: 130px;
+      border: 3px solid var(--ink);
+      color: white;
+      background: var(--purple);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 4vw, 52px);
+      transform: rotate(-1.5deg);
+    }
+    .question-card q {
+      display: block;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(40px, 5vw, 74px);
+      font-style: italic;
+      line-height: .93;
+    }
+    .question-card small { display: block; margin-top: 24px; font: 600 11px/1.4 "Martian Mono", monospace; text-transform: uppercase; }
+    .format-steps { counter-reset: steps; border-top: var(--line); }
+    .format-step {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: var(--line);
+    }
+    .format-step::before {
+      content: "0" counter(steps);
+      font: 700 12px/1 "Martian Mono", monospace;
+      color: var(--purple);
+    }
+    .format-step h3 { margin: 0 0 7px; font-size: clamp(25px, 3vw, 38px); line-height: .95; letter-spacing: -.035em; text-transform: uppercase; }
+    .format-step p { margin: 0; font-size: 17px; line-height: 1.35; }
+
+    .guest-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .guest {
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: white;
+      padding: 14px 18px;
+      font: 600 12px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      transition: transform 150ms ease, background 150ms ease;
+    }
+    .guest:hover { transform: rotate(-2deg) scale(1.03); background: var(--lime); }
+    .guest.featured { color: white; background: var(--ink); }
+
+    .package { background: var(--blue); color: white; overflow: hidden; }
+    .package .section-kicker .num { color: var(--ink); }
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 3px solid white;
+      margin-top: 65px;
+    }
+    .package-stat {
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border-right: 2px solid white;
+    }
+    .package-stat:last-child { border-right: 0; }
+    .package-stat strong {
+      font-size: clamp(56px, 8vw, 112px);
+      line-height: .75;
+      letter-spacing: -.07em;
+    }
+    .package-stat span { font: 600 12px/1.35 "Martian Mono", monospace; text-transform: uppercase; }
+    .cost-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      border-top: 3px solid white;
+      margin-top: 60px;
+      padding-top: 25px;
+    }
+    .cost-line p { margin: 0; font-size: clamp(20px, 2.7vw, 40px); line-height: 1.05; letter-spacing: -.03em; }
+    .cost-line strong { color: var(--lime); font-size: clamp(44px, 7vw, 92px); line-height: .8; letter-spacing: -.06em; }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 60px;
+    }
+    .value-card {
+      min-height: 230px;
+      border: 3px solid var(--ink);
+      background: white;
+      padding: clamp(25px, 4vw, 45px);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .value-card:hover { transform: translate(-5px,-5px); box-shadow: 10px 10px 0 var(--orange); }
+    .value-card:nth-child(2):hover { box-shadow-color: var(--blue); }
+    .value-card:nth-child(3):hover { box-shadow-color: var(--purple); }
+    .value-card:nth-child(4):hover { box-shadow-color: var(--lime); }
+    .value-card .icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: var(--line);
+      border-radius: 50%;
+      margin-bottom: 28px;
+      font: 800 18px/1 "Martian Mono", monospace;
+      background: var(--lime);
+    }
+    .value-card h3 { margin: 0 0 10px; font-size: clamp(27px, 3vw, 42px); line-height: .92; letter-spacing: -.045em; text-transform: uppercase; }
+    .value-card p { margin: 0; max-width: 560px; font-size: 17px; line-height: 1.35; }
+    .rights-note {
+      margin-top: 24px;
+      font: 400 11px/1.5 "Martian Mono", monospace;
+      text-transform: uppercase;
+      color: rgba(11,11,11,.68);
+    }
+
+    .merch {
+      color: white;
+      background: var(--ink);
+      padding: clamp(90px, 12vw, 180px) var(--pad);
+    }
+    .merch-grid {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 70px;
+      align-items: end;
+    }
+    .merch .display em { color: var(--gold); }
+    .merch-card {
+      border: 2px solid white;
+      box-shadow: 10px 10px 0 var(--gold);
+      padding: 28px;
+    }
+    .merch-card strong { display: block; color: var(--lime); font-size: clamp(46px, 6vw, 86px); line-height: .8; letter-spacing: -.06em; }
+    .merch-card span { display: block; margin-top: 18px; color: rgba(255,255,255,.72); font-size: 16px; line-height: 1.4; }
+
+    .team { background: var(--paper); }
+    .team-list { margin-top: 55px; border-top: 3px solid var(--ink); }
+    .team-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: var(--line);
+    }
+    .team-row .code { font: 600 11px/1 "Martian Mono", monospace; color: var(--blue); }
+    .team-row strong { font-size: clamp(28px, 4vw, 56px); line-height: .85; letter-spacing: -.05em; text-transform: uppercase; }
+    .team-row span { font: 500 12px/1.35 "Martian Mono", monospace; text-transform: uppercase; }
+
+    .ask {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background: var(--purple);
+      padding: 120px var(--pad) 45px;
+      overflow: hidden;
+    }
+    .ask::before {
+      content: "";
+      position: absolute;
+      width: min(75vw, 980px);
+      aspect-ratio: 1;
+      border: 3px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      box-shadow: 0 0 0 90px rgba(255,255,255,.04), 0 0 0 180px rgba(255,255,255,.03);
+    }
+    .ask-inner { position: relative; z-index: 2; max-width: 1200px; }
+    .ask .mono { font-size: 12px; }
+    .ask h2 {
+      margin: 25px 0 35px;
+      font-size: clamp(68px, 12vw, 190px);
+      line-height: .7;
+      letter-spacing: -.085em;
+      text-transform: uppercase;
+    }
+    .ask h2 em {
+      display: block;
+      color: var(--lime);
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      text-transform: none;
+    }
+    .ask-copy {
+      max-width: 780px;
+      margin: 0 auto 40px;
+      font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.12;
+    }
+    .ask-amount {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--ink);
+      background: var(--lime);
+      border: 3px solid var(--ink);
+      box-shadow: 9px 9px 0 var(--ink);
+      padding: 17px 23px;
+      font: 800 14px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+    .ask-amount strong { font-size: 26px; }
+
+    footer {
+      color: white;
+      background: var(--ink);
+      padding: 28px var(--pad) 40px;
+      border-top: 1px solid rgba(255,255,255,.2);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: end;
+    }
+    .footer-mark { font-size: clamp(32px, 5vw, 70px); font-weight: 900; letter-spacing: -.06em; }
+    .footer-meta { color: rgba(255,255,255,.58); font: 400 10px/1.65 "Martian Mono", monospace; text-transform: uppercase; }
+    .source-links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 22px; }
+    .source-links a { color: rgba(255,255,255,.65); font: 500 10px/1.3 "Martian Mono", monospace; text-transform: uppercase; }
+    .source-links a:hover { color: var(--lime); }
+    .vessel { text-align: right; font: 500 10px/1.5 "Martian Mono", monospace; text-transform: uppercase; color: rgba(255,255,255,.55); }
+
+    dialog {
+      width: min(94vw, 1100px);
+      max-height: 92svh;
+      border: 3px solid var(--ink);
+      padding: 0;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 16px 16px 0 var(--lime);
+    }
+    dialog::backdrop { background: rgba(0,0,0,.82); backdrop-filter: blur(5px); }
+    .dialog-head {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 54px;
+      color: white;
+      background: var(--ink);
+      padding: 0 14px 0 20px;
+      font: 600 11px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+    }
+    .dialog-close {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      color: white;
+      background: transparent;
+      cursor: pointer;
+    }
+    .video-wrap { aspect-ratio: 16/9; background: black; }
+    .video-wrap iframe { width: 100%; height: 100%; border: 0; }
+    .proof-dialog-body { padding: 24px; max-height: calc(92svh - 54px); overflow: auto; }
+    .proof-switch { display: flex; gap: 8px; margin-bottom: 20px; }
+    .proof-switch button {
+      border: var(--line);
+      border-radius: 999px;
+      background: white;
+      padding: 11px 14px;
+      font: 600 10px/1 "Martian Mono", monospace;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .proof-switch button[aria-selected="true"] { background: var(--lime); }
+    .proof-shot { display: none; max-width: 780px; margin: 0 auto; border: var(--line); }
+    .proof-shot.active { display: block; }
+    .lightbox-image { max-height: calc(92svh - 54px); object-fit: contain; background: var(--ink); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 650ms cubic-bezier(.2,.8,.2,1), transform 650ms cubic-bezier(.2,.8,.2,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 880px) {
+      .topbar { grid-template-columns: 1fr auto; }
+      .topbar nav { display: none; }
+      .hero-content { padding-top: 120px; }
+      .hero h1 { font-size: clamp(72px, 18vw, 145px); }
+      .hero h1 .life { transform: translateX(7vw); }
+      .hero-bottom { grid-template-columns: repeat(4, 1fr); }
+      .hero-pitch { grid-column: 1 / -1; margin-bottom: 15px; }
+      .thesis-grid, .proof-grid, .project-head, .budget-shell, .concept-grid, .merch-grid { grid-template-columns: 1fr; }
+      .video-card, .budget-sticky, .question-card { position: relative; top: auto; }
+      .project-number { justify-self: start; }
+      .day-content { grid-template-columns: 1fr; }
+      .day-image { min-height: 330px; grid-row: 1; }
+      .package-grid { grid-template-columns: repeat(2, 1fr); }
+      .package-stat:nth-child(2) { border-right: 0; }
+      .package-stat:nth-child(-n+2) { border-bottom: 2px solid white; }
+      .value-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 590px) {
+      :root { --shadow: 6px 6px 0 var(--ink); }
+      .topbar { top: 13px; width: calc(100vw - 24px); padding-left: 16px; }
+      .nav-ask { padding: 11px 13px; }
+      .hero { min-height: 880px; }
+      .hero h1 { font-size: clamp(66px, 22vw, 105px); line-height: .72; }
+      .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 18px 8px; }
+      .hero-pitch { font-size: 18px; }
+      .hero-stat { min-height: 56px; }
+      .ticker-track { font-size: 11px; }
+      .display { font-size: clamp(52px, 18vw, 92px); }
+      .life-intro .display { font-size: 54px; line-height: .8; }
+      .body-large { font-size: 28px; }
+      .proof-stat .big { font-size: 58px; }
+      .proof-stat .what { font-size: 10px; max-width: 112px; }
+      .play { width: 64px; height: 64px; }
+      .project-number { width: 118px; }
+      .day-tabs { overflow-x: auto; grid-template-columns: repeat(5, minmax(96px, 1fr)); }
+      .day-copy { padding: 30px 22px 36px; }
+      .day-image { min-height: 260px; }
+      .frame { flex-basis: 86vw; }
+      .budget-row { grid-template-columns: 42px 1fr auto; gap: 10px; }
+      .budget-row strong { font-size: 20px; }
+      .budget-row p { font-size: 14px; }
+      .budget-row .amount { font-size: 22px; }
+      .package-grid { grid-template-columns: 1fr; }
+      .package-stat { min-height: 165px; border-right: 0; border-bottom: 2px solid white; }
+      .package-stat:last-child { border-bottom: 0; }
+      .cost-line { grid-template-columns: 1fr; }
+      .team-row { grid-template-columns: 42px 1fr; }
+      .team-row span { grid-column: 2; }
+      .ask h2 { font-size: 58px; line-height: .82; letter-spacing: -.07em; }
+      .ask h2 em { margin-top: 12px; font-size: 64px; line-height: .76; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .vessel { text-align: left; }
+      dialog { box-shadow: 7px 7px 0 var(--lime); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to proposal</a>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="topbar" aria-label="Pitch navigation">
+    <a class="wordmark" href="#top" aria-label="BULT, back to top">BULT</a>
+    <nav>
+      <a href="#proof">Proof</a>
+      <a href="#paris">Paris</a>
+      <a href="#perfect-day">Perfect Day</a>
+      <a href="#package">The Package</a>
+    </nav>
+    <a class="nav-ask" href="#ask">The $60K ask</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-media"><img src="assets/paris-courtyard.webp" alt="Harris Rudman and Brian Lentz in a Paris courtyard"></div>
+      <div class="hero-content">
+        <p class="eyebrow">A founding media partnership for Alex Bult</p>
+        <h1>The Work.<span class="life">The Life.</span></h1>
+        <div class="hero-bottom">
+          <p class="hero-pitch">Two original series with Harris Rudman. One album. Sixty finished films. One partner behind all of it.</p>
+          <div class="hero-stat"><strong>02</strong><span>Original series</span></div>
+          <div class="hero-stat"><strong>60</strong><span>Finished videos</span></div>
+          <div class="hero-stat"><strong>01</strong><span>New album</span></div>
+          <div class="hero-stat"><strong>$60K</strong><span>Total investment</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>30 days in Paris</span><span>30 daily films</span><span>one original album</span><span>10 perfect days</span><span>30 more videos</span><span>BULT presents</span>
+        <span>30 days in Paris</span><span>30 daily films</span><span>one original album</span><span>10 perfect days</span><span>30 more videos</span><span>BULT presents</span>
+      </div>
+    </div>
+
+    <section class="thesis">
+      <div class="thesis-grid">
+        <div class="reveal">
+          <div class="section-kicker"><span class="num">01</span> The partnership thesis</div>
+          <h2 class="display">BULT does not need a rented ad. It needs an <em>owned story.</em></h2>
+        </div>
+        <div class="thesis-copy reveal">
+          <p>BULT is built for men carrying real responsibility—men trying to stay consistent through pressure, ambition and long days. So we show that life honestly.</p>
+          <p><strong>Paris is the work required to build something. Perfect Day is the life you are building it for.</strong> Together, they give BULT a world, not a product placement.</p>
+          <p>Alex has already built cultural platforms—from Alex Bult Gallery to his role as president of the Wayne Thiebaud Foundation. This brings that same patron instinct into modern media: back the work, own the association, let the story compound.</p>
+          <a class="bult-quote" href="https://bult.com/" target="_blank" rel="noreferrer">“Modern life is breaking men.” — BULT</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof section-pad grid-bg" id="proof">
+      <div class="section-kicker reveal"><span class="num">02</span> Proof before promise</div>
+      <h2 class="display reveal">Harris has already done the <em>impossible part.</em></h2>
+      <div class="proof-grid">
+        <div class="reveal">
+          <div class="stat-stack">
+            <div class="proof-stat">
+              <div class="big count" data-target="4522021" data-format="compact">0</div>
+              <div class="what">Spotify streams<br>Missing Document</div>
+            </div>
+            <div class="proof-stat">
+              <div class="big count" data-target="7428183" data-format="compact">0</div>
+              <div class="what">Visible catalog streams<br>artist-supplied data</div>
+            </div>
+            <div class="proof-stat">
+              <div class="big count" data-target="48456" data-format="plus">0</div>
+              <div class="what">Visible YouTube views<br>approx. across 40 uploads</div>
+            </div>
+          </div>
+          <p class="proof-note"><strong>Missing Document was written and recorded in Paris in roughly a week and a half.</strong> It reached 4.52 million Spotify streams without a daily content plan, a dedicated filmmaker or a founding sponsor.</p>
+          <div class="proof-actions">
+            <button class="btn" type="button" data-open-video>Watch Paris performance <span class="arrow">↗</span></button>
+            <button class="btn alt" type="button" data-open-proof>View source proof <span class="arrow">+</span></button>
+          </div>
+        </div>
+        <article class="video-card reveal">
+          <div class="window-bar"><i></i><i></i><i></i><span class="window-title">Paris / 2019 / Evidence</span></div>
+          <button class="video-button" type="button" data-open-video aria-label="Play Harris Rudman's Paris performance">
+            <img src="assets/paris-crowd.webp" alt="Harris Rudman posing with fans in Paris">
+            <span class="play" aria-hidden="true">▶</span>
+          </button>
+          <div class="video-caption">
+            <strong>Harris Rudman live in Paris</strong>
+            <span>“Immunity” • Produced by Brian Lentz • From Missing Document</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="photo-break">
+      <img src="assets/paris-recording.webp" alt="Harris Rudman recording music in front of an open Paris window">
+      <div class="photo-break-copy reveal">
+        <div class="section-kicker">The opportunity</div>
+        <h2 class="display">Paris made the music. This time, we capture the <em>becoming.</em></h2>
+      </div>
+    </section>
+
+    <section class="section-pad grid-bg" id="paris">
+      <div class="project-head">
+        <div class="reveal">
+          <div class="section-kicker"><span class="num">03</span> Series one / The work</div>
+          <h2 class="display">Harris in Paris</h2>
+          <p class="subhed"><strong>30 days. 30 films. One album.</strong> A daily creative pressure-cooker where the audience comes back every day to see whether the record gets finished.</p>
+        </div>
+        <div class="project-number reveal">30</div>
+      </div>
+
+      <div class="day-map reveal">
+        <div class="day-tabs" role="tablist" aria-label="Paris story arc">
+          <button class="day-tab" role="tab" aria-selected="true" data-day="0">Day 01</button>
+          <button class="day-tab" role="tab" aria-selected="false" data-day="1">Day 07</button>
+          <button class="day-tab" role="tab" aria-selected="false" data-day="2">Day 15</button>
+          <button class="day-tab" role="tab" aria-selected="false" data-day="3">Day 23</button>
+          <button class="day-tab" role="tab" aria-selected="false" data-day="4">Day 30</button>
+        </div>
+        <div class="day-content">
+          <div class="day-copy">
+            <span class="mono" id="dayLabel">Chapter 01 / Arrival</span>
+            <h3 id="dayTitle">Land. Set the clock.</h3>
+            <p id="dayText">The team arrives, establishes the stakes and opens the first BULT pouch. Thirty days from now, a new Harris Rudman album has to exist.</p>
+          </div>
+          <div class="day-image"><img id="dayImage" src="assets/paris-market.webp" alt="Harris Rudman and Brian Lentz on a Paris street"></div>
+        </div>
+      </div>
+
+      <div class="filmstrip-wrap reveal">
+        <div class="filmstrip-label mono">Original Paris archive — drag to explore</div>
+        <div class="filmstrip" aria-label="Paris photo archive">
+          <figure class="frame" tabindex="0" data-lightbox="assets/paris-graffiti.webp" data-caption="Paris streets / Harris Rudman + Brian Lentz">
+            <img src="assets/paris-graffiti.webp" alt="Harris Rudman and Brian Lentz beside street art in Paris">
+            <figcaption><span>Paris archive 001</span><span>Open ↗</span></figcaption>
+          </figure>
+          <figure class="frame" tabindex="0" data-lightbox="assets/paris-performance.webp" data-caption="Live performance / Paris">
+            <img src="assets/paris-performance.webp" alt="Harris Rudman performing into a microphone in Paris">
+            <figcaption><span>Paris archive 002</span><span>Open ↗</span></figcaption>
+          </figure>
+          <figure class="frame" tabindex="0" data-lightbox="assets/paris-shutter.webp" data-caption="On location / Paris">
+            <img src="assets/paris-shutter.webp" alt="Harris Rudman and Brian Lentz in front of a painted Paris storefront">
+            <figcaption><span>Paris archive 003</span><span>Open ↗</span></figcaption>
+          </figure>
+          <figure class="frame" tabindex="0" data-lightbox="assets/paris-recording.webp" data-caption="Recording / Paris apartment">
+            <img src="assets/paris-recording.webp" alt="Harris Rudman recording beside an open Paris window">
+            <figcaption><span>Paris archive 004</span><span>Open ↗</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="budget-section section-pad" id="budgets">
+      <div class="budget-shell">
+        <div class="budget-sticky reveal">
+          <div class="section-kicker"><span class="num">04</span> Transparent investment</div>
+          <div class="budget-total" id="budgetTotal">$60K</div>
+          <p class="budget-desc" id="budgetDesc">The complete founding partnership: both original series, sixty finished videos and one new album.</p>
+          <div class="budget-tabs" role="tablist" aria-label="Budget views">
+            <button class="budget-tab" role="tab" aria-selected="true" data-budget="all">Complete</button>
+            <button class="budget-tab" role="tab" aria-selected="false" data-budget="paris">Paris</button>
+            <button class="budget-tab" role="tab" aria-selected="false" data-budget="dayoff">Perfect Day</button>
+          </div>
+        </div>
+        <div class="budget-list reveal" id="budgetList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="life-intro section-pad" id="perfect-day">
+      <div class="section-kicker reveal"><span class="num">05</span> Series two / The life</div>
+      <h2 class="display reveal">Harris Bueller’s <em>Perfect Day Off.</em></h2>
+      <p class="body-large reveal" style="margin-top:42px">One notable guest designs their ideal day. Harris has to do every single thing—good, bad, moving or ridiculous—and BULT makes the day possible.</p>
+    </section>
+
+    <section class="section-pad grid-bg">
+      <div class="concept-grid">
+        <aside class="question-card reveal">
+          <q>If time and money were not an issue, what would your perfect day look like?</q>
+          <small>The question that opens every episode</small>
+        </aside>
+        <div class="reveal">
+          <div class="section-kicker">10 episodes / 15–20 minutes each</div>
+          <div class="format-steps">
+            <article class="format-step"><div><h3>Cold open</h3><p>The funniest or most emotional moment first. Give the audience a reason to stay.</p></div></article>
+            <article class="format-step"><div><h3>Meet the guest</h3><p>Who they are, what they carry and why this is their version of a perfect day.</p></div></article>
+            <article class="format-step"><div><h3>Do everything</h3><p>Three or four meaningful activities. Harris participates in all of it—no matter what.</p></div></article>
+            <article class="format-step"><div><h3>Favorite meal</h3><p>The conversation loosens. We get the story behind the person, not the public bio.</p></div></article>
+            <article class="format-step"><div><h3>The reflection</h3><p>What makes a life feel full? End with one honest answer and two high-impact short cutdowns.</p></div></article>
+          </div>
+          <div class="section-kicker" style="margin-top:48px;margin-bottom:0">Target guests / introductions in progress</div>
+          <div class="guest-cloud" aria-label="Potential guests">
+            <span class="guest featured">Maxime Raynaud</span>
+            <span class="guest featured">Dusty Baker</span>
+            <span class="guest">Angelo Elysian</span>
+            <span class="guest">Ann Phong</span>
+            <span class="guest">Sacramento athletes</span>
+            <span class="guest">Artists</span>
+            <span class="guest">Business owners</span>
+            <span class="guest">Alex Bult / Episode Zero</span>
+          </div>
+          <p class="rights-note">Names are targets, not confirmed bookings. Guest mix will be finalized with BULT.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="package section-pad" id="package">
+      <div class="section-kicker reveal"><span class="num">06</span> One deal / Months of visibility</div>
+      <h2 class="display reveal">What $60K <em>actually buys.</em></h2>
+      <div class="package-grid reveal">
+        <div class="package-stat"><strong>02</strong><span>Ownable original series</span></div>
+        <div class="package-stat"><strong>10</strong><span>Long-form YouTube episodes</span></div>
+        <div class="package-stat"><strong>50</strong><span>Vertical short-form films</span></div>
+        <div class="package-stat"><strong>01</strong><span>Original album + cultural association</span></div>
+      </div>
+      <div class="cost-line reveal">
+        <p>Sixty finished videos before counting the album, guest reach, press moments or merchandise.</p>
+        <strong>$1K / film</strong>
+      </div>
+    </section>
+
+    <section class="section-pad grid-bg">
+      <div class="section-kicker reveal"><span class="num">07</span> BULT receives</div>
+      <h2 class="display reveal">The brand is not beside the story. <em>It makes the story possible.</em></h2>
+      <div class="value-grid">
+        <article class="value-card reveal"><span class="icon">B</span><h3>BULT Presents</h3><p>Presenting-partner credit across all sixty videos, the Paris story and both series title systems.</p></article>
+        <article class="value-card reveal"><span class="icon">↗</span><h3>Natural integration</h3><p>BULT appears as a daily ritual inside work, travel, recovery and honest conversations—not as a forced commercial break.</p></article>
+        <article class="value-card reveal"><span class="icon">∞</span><h3>Reusable media</h3><p>Organic reposting and campaign usage rights for agreed edits, plus category exclusivity across the partnership window.</p></article>
+        <article class="value-card reveal"><span class="icon">#</span><h3>Measurable action</h3><p>Trackable links and codes, monthly reporting, watch-time and retention, traffic, attributed subscriptions, album streams and merch performance.</p></article>
+      </div>
+      <p class="rights-note reveal">Final posting schedule, paid-media usage, exclusivity term, approval windows and reporting access to be defined in the partnership agreement.</p>
+    </section>
+
+    <section class="merch">
+      <div class="merch-grid">
+        <div class="reveal">
+          <div class="section-kicker">Additional upside / no extra production ask</div>
+          <h2 class="display">A story people can <em>wear.</em></h2>
+          <p class="subhed">Limited drops can turn the two series into artifacts: Paris editions, Perfect Day pieces and BULT × Harris capsules.</p>
+        </div>
+        <div class="merch-card reveal">
+          <strong>100%</strong>
+          <span>BULT receives net merchandise receipts after manufacturing, fulfillment, platform fees, taxes, refunds and returns. BULT controls the dropshipping operation.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="team section-pad">
+      <div class="section-kicker reveal"><span class="num">08</span> The four-person core</div>
+      <h2 class="display reveal">Small team. <em>Clear ownership.</em></h2>
+      <div class="team-list reveal">
+        <div class="team-row"><span class="code">EP</span><strong>Alex Bult</strong><span>Executive Producer + Founding Partner</span></div>
+        <div class="team-row"><span class="code">01</span><strong>Harris Rudman</strong><span>Artist, Host + Co-Creator</span></div>
+        <div class="team-row"><span class="code">02</span><strong>Brian Lentz</strong><span>Music Producer + Co-Creator</span></div>
+        <div class="team-row"><span class="code">03</span><strong>Antonie Lewis</strong><span>Director, Cinematographer + Creative Director</span></div>
+      </div>
+    </section>
+
+    <section class="ask" id="ask">
+      <div class="ask-inner reveal">
+        <div class="mono">The decision</div>
+        <h2>Build the work.<em>Live the life.</em></h2>
+        <p class="ask-copy">Thirty days to make an album. Ten perfect days worth remembering. Sixty pieces of original content. One founding partner behind all of it.</p>
+        <div class="ask-amount"><span>Founding partnership</span><strong>$60,000</strong></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark">BULT × HARRIS RUDMAN</div>
+        <div class="source-links">
+          <a href="https://bult.com/" target="_blank" rel="noreferrer">BULT official site ↗</a>
+          <a href="https://www.youtube.com/watch?v=n7AxJwXL1XM" target="_blank" rel="noreferrer">Paris performance ↗</a>
+          <a href="https://www.capradio.org/articles/2025/09/10/behind-the-mic-sacramentos-multifaceted-rapper-harris-rudman/" target="_blank" rel="noreferrer">CapRadio profile ↗</a>
+          <a href="https://statehornet.com/2020/03/harris-rudman-candyland-sacstate-youtube/" target="_blank" rel="noreferrer">Missing Document story ↗</a>
+          <a href="https://giving.ucdavis.edu/impacts-giving/selections-wayne-thiebauds-personal-art-collection-come-home-uc-davis-honoring" target="_blank" rel="noreferrer">Alex Bult / Wayne Thiebaud Foundation ↗</a>
+        </div>
+        <p class="footer-meta">Streaming and YouTube figures reflect artist-supplied screenshots and visible public catalog data. Proposal terms subject to final agreement. “Harris Bueller’s Perfect Day Off” is a working title subject to clearance.</p>
+      </div>
+      <div class="vessel">Presented by BULT<br>Creative development by Vessel Archive<br>© 2026</div>
+    </div>
+  </footer>
+
+  <dialog id="videoDialog" aria-labelledby="videoTitle">
+    <div class="dialog-head"><span id="videoTitle">Harris Rudman live in Paris — “Immunity”</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close video">×</button></div>
+    <div class="video-wrap" id="videoWrap"></div>
+  </dialog>
+
+  <dialog id="proofDialog" aria-labelledby="proofTitle">
+    <div class="dialog-head"><span id="proofTitle">Artist-supplied performance proof</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close proof">×</button></div>
+    <div class="proof-dialog-body">
+      <div class="proof-switch" role="tablist" aria-label="Proof sources">
+        <button type="button" role="tab" aria-selected="true" data-proof="spotify">Spotify</button>
+        <button type="button" role="tab" aria-selected="false" data-proof="youtube">YouTube</button>
+      </div>
+      <img class="proof-shot active" data-proof-shot="spotify" src="assets/spotify-proof.webp" alt="Spotify for Artists screenshot showing Missing Document at 4,522,021 streams and other releases">
+      <img class="proof-shot" data-proof-shot="youtube" src="assets/youtube-proof.webp" alt="Harris Rudman YouTube videos sorted by popularity">
+    </div>
+  </dialog>
+
+  <dialog id="lightboxDialog" aria-labelledby="lightboxTitle">
+    <div class="dialog-head"><span id="lightboxTitle">Paris archive</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close image">×</button></div>
+    <img class="lightbox-image" id="lightboxImage" src="assets/paris-graffiti.webp" alt="">
+  </dialog>
+
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const progressBar = document.getElementById('progressBar');
+    const setProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    };
+    addEventListener('scroll', setProgress, { passive: true });
+    setProgress();
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    const formatNumber = (value, format) => {
+      if (format === 'compact') {
+        if (value >= 1000000) return (value / 1000000).toFixed(2).replace(/0$/, '') + 'M';
+        if (value >= 1000) return Math.round(value / 1000) + 'K';
+      }
+      if (format === 'plus') return Math.round(value / 1000) + 'K+';
+      return value.toLocaleString();
+    };
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.target);
+        const duration = reduceMotion ? 1 : 1200;
+        const start = performance.now();
+        const tick = now => {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = formatNumber(Math.round(target * eased), el.dataset.format);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('.count').forEach(el => counterObserver.observe(el));
+
+    const days = [
+      { label: 'Chapter 01 / Arrival', title: 'Land. Set the clock.', text: 'The team arrives, establishes the stakes and opens the first BULT pouch. Thirty days from now, a new Harris Rudman album has to exist.', image: 'assets/paris-market.webp', alt: 'Harris Rudman and Brian Lentz on a Paris street' },
+      { label: 'Chapter 02 / Momentum', title: 'Find the sound.', text: 'Sessions, city walks and local collaborators. The audience begins hearing fragments and choosing favorite moments in real time.', image: 'assets/paris-graffiti.webp', alt: 'Harris Rudman and Brian Lentz beside street art in Paris' },
+      { label: 'Chapter 03 / The wall', title: 'Make pressure visible.', text: 'The middle gets honest: missed ideas, fatigue, rewrites and the discipline required to keep showing up. BULT belongs here naturally.', image: 'assets/paris-recording.webp', alt: 'Harris Rudman recording in a Paris apartment' },
+      { label: 'Chapter 04 / Breakthrough', title: 'The record appears.', text: 'Songs connect. Guests arrive. A title, visual world and final track list take shape while the deadline keeps moving closer.', image: 'assets/paris-performance.webp', alt: 'Harris Rudman performing in Paris' },
+      { label: 'Chapter 05 / Delivery', title: 'Finish in public.', text: 'Final vocals, final sequence, final listen. The audience has watched every step, and BULT owns the moment the album becomes real.', image: 'assets/paris-courtyard.webp', alt: 'Harris Rudman and Brian Lentz in a Paris courtyard' }
+    ];
+    const dayTabs = [...document.querySelectorAll('.day-tab')];
+    dayTabs.forEach(tab => tab.addEventListener('click', () => {
+      const i = Number(tab.dataset.day);
+      dayTabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      document.getElementById('dayLabel').textContent = days[i].label;
+      document.getElementById('dayTitle').textContent = days[i].title;
+      document.getElementById('dayText').textContent = days[i].text;
+      const img = document.getElementById('dayImage');
+      img.src = days[i].image;
+      img.alt = days[i].alt;
+    }));
+
+    const budgetData = {
+      all: {
+        total: '$60K',
+        desc: 'The complete founding partnership: both original series, sixty finished videos and one new album.',
+        rows: [
+          ['P01', 'Harris in Paris', '30 daily films + one original album', '$35K'],
+          ['P02', 'Perfect Day Off', '10 long-form episodes + 20 cutdowns', '$25K']
+        ]
+      },
+      paris: {
+        total: '$35K',
+        desc: 'Thirty days in Paris to write, record and finish an album while releasing one story-driven vertical film every day.',
+        rows: [
+          ['01', 'Core creative fees', 'Harris, Brian and Antonie at $5K each', '$15K'],
+          ['02', 'Flights + equipment travel', 'Round-trip production travel', '$3K'],
+          ['03', 'Housing', 'Thirty-day Paris apartment', '$7K'],
+          ['04', 'Living + production', 'Food, local transport and production expenses', '$10K']
+        ]
+      },
+      dayoff: {
+        total: '$25K',
+        desc: 'Ten complete guest-led episodes, each 15–20 minutes, plus two short cutdowns from every episode.',
+        rows: [
+          ['01', 'Harris / host + development', 'Preparation, guest chemistry and on-camera lead', '$10K'],
+          ['02', 'Video production + post', 'Direction, cinematography, edit and delivery', '$10K'],
+          ['03', 'Guest experiences', 'Up to $500 per perfect day across 10 episodes', '$5K']
+        ]
+      }
+    };
+    const renderBudget = key => {
+      const data = budgetData[key];
+      document.getElementById('budgetTotal').textContent = data.total;
+      document.getElementById('budgetDesc').textContent = data.desc;
+      document.getElementById('budgetList').innerHTML = data.rows.map(row => `
+        <div class="budget-row">
+          <span class="code">${row[0]}</span>
+          <div><strong>${row[1]}</strong><p>${row[2]}</p></div>
+          <span class="amount">${row[3]}</span>
+        </div>`).join('');
+    };
+    renderBudget('all');
+    const budgetTabs = [...document.querySelectorAll('.budget-tab')];
+    budgetTabs.forEach(tab => tab.addEventListener('click', () => {
+      budgetTabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      renderBudget(tab.dataset.budget);
+    }));
+
+    const openDialog = dialog => {
+      dialog.showModal();
+      document.body.classList.add('modal-open');
+    };
+    const closeDialog = dialog => {
+      dialog.close();
+      document.body.classList.remove('modal-open');
+    };
+    document.querySelectorAll('dialog').forEach(dialog => {
+      dialog.addEventListener('click', e => {
+        if (e.target === dialog) closeDialog(dialog);
+      });
+      dialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
+      dialog.querySelector('[data-close-dialog]').addEventListener('click', () => closeDialog(dialog));
+    });
+
+    const videoDialog = document.getElementById('videoDialog');
+    const videoWrap = document.getElementById('videoWrap');
+    document.querySelectorAll('[data-open-video]').forEach(button => button.addEventListener('click', () => {
+      videoWrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/n7AxJwXL1XM?autoplay=1&rel=0" title="Harris Rudman live in Paris — Immunity" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      openDialog(videoDialog);
+    }));
+    videoDialog.addEventListener('close', () => { videoWrap.innerHTML = ''; });
+
+    const proofDialog = document.getElementById('proofDialog');
+    document.querySelector('[data-open-proof]').addEventListener('click', () => openDialog(proofDialog));
+    const proofTabs = [...document.querySelectorAll('[data-proof]')];
+    proofTabs.forEach(tab => tab.addEventListener('click', () => {
+      proofTabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      document.querySelectorAll('[data-proof-shot]').forEach(shot => shot.classList.toggle('active', shot.dataset.proofShot === tab.dataset.proof));
+    }));
+
+    const lightboxDialog = document.getElementById('lightboxDialog');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const showFrame = frame => {
+      lightboxImage.src = frame.dataset.lightbox;
+      lightboxImage.alt = frame.querySelector('img').alt;
+      lightboxTitle.textContent = frame.dataset.caption;
+      openDialog(lightboxDialog);
+    };
+    document.querySelectorAll('[data-lightbox]').forEach(frame => {
+      frame.addEventListener('click', () => showFrame(frame));
+      frame.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showFrame(frame); }
+      });
+    });
+  </script>
+</body>
+</html>
