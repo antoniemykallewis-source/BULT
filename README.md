@@ -1,4 +1,4 @@
-# BULT × Harris Rudman — The Work. The Life.
+# BULT × Harris Rudman | The Work. The Life.
 
 This folder is a complete static pitch site. It has no build step and no dependencies.
 
